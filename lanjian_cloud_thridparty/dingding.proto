@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+option go_package = "lanjian_cloud_thirdparty/dingding";
+
+package dingding;
+
+message DeptInfo {
+  bool AutoAdduser = 1;
+  bool CreateDeptGroup = 2;
+  int64 DeptId = 3;
+  string Name = 4;
+  int64 ParentId = 5;
+  repeated DeptInfo ChildDept = 6;
+}
+
+message DeptInfoRequest {
+  int64 DeptId = 1;
+}
+
+message DeptInfoReply {
+  int64 Code = 1;
+  string Msg = 2;
+  repeated DeptInfo DeptInfo = 3;
+}
+
+message UserInfo {
+  string Userid = 1;
+  string UnionId = 2;
+  string Name = 3;
+  string Avatar = 4;
+  string StateCode = 5;
+  string Mobile = 6;
+  bool HideMobile = 7;
+  string Telephone = 8;
+  string JobNumber = 9;
+  string Title = 10;
+  string Email = 11;
+  string OrgEmail = 12;
+  string WorkPlace = 13;
+  string Remark = 14;
+  repeated int64 DeptIdList = 15;
+  int64 DeptOrder = 16;
+  bool Active = 17;
+  bool Admin = 18;
+  bool Boss = 19;
+  bool Leader = 20;
+  bool ExclusiveAccount = 21;
+  string LoginId = 22;
+  string ExclusiveAccountType = 23;
+}
+
+message UserInfoRequest {
+  int64 DeptId = 1;
+  int64 Cursor = 2;
+  int64 Size = 3;
+}
+
+message UserInfoReply {
+  int64 Code = 1;
+  string Msg = 2;
+  repeated UserInfo UserInfoList = 3;
+}
+
+message AccessTokenRequest {}
+message AccessTokenReply {
+  int64 Code = 1;
+  string Msg = 2;
+  string AccessToken = 3;
+}
+
+service User {
+  rpc GetUserList(UserInfoRequest) returns (UserInfoReply);
+}
+
+service Dept {
+  rpc GetDeptList(DeptInfoRequest) returns (DeptInfoReply);
+}
+
+service Auth {
+  rpc GetAccessToken(AccessTokenRequest) returns (AccessTokenReply);
+}
